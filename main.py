@@ -3,10 +3,22 @@ import mediapipe as mp
 import numpy as np
 import math
 
+import pygame
+
+# Initialize Pygame
+pygame.init()
+
+# Load sound files for each note (replace with actual file paths)
+sounds = [pygame.mixer.Sound("assets/sounds/C.wav")]
+
+from sound import play
+
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands()
 mp_draw = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
+
+ANGLE_THRESHOLD = 40
 
 capture = cv.VideoCapture(0)
 
@@ -18,6 +30,8 @@ points = [
     13, 14,  # Ring finger
     17, 18,  # Pinky finger
     ]
+
+is_pressed = [False for _ in range(8)]
 
 while True:
     """
@@ -67,12 +81,18 @@ while True:
                 
                 angles.append(angle)
                 
-
+        for i in range(len(angles)):
+            if angles[i] > ANGLE_THRESHOLD and not is_pressed[i]:
+                is_pressed[i] = True
+                sounds[0].play()
+            elif angles[i] < ANGLE_THRESHOLD and is_pressed[i]:
+                is_pressed[i] = False
+        
+        print(is_pressed)
+        
         #if(len(angles) != 8):
         #    cv.putText(frame, "Both of your hands must be visible!", (0, 30), cv.FONT_HERSHEY_TRIPLEX, 0.9, (255, 0, 255), 2)
          
-         
-            
 
     cv.imshow('Invisible Piano', frame)
     
