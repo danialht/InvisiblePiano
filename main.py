@@ -2,17 +2,10 @@ import cv2 as cv
 import mediapipe as mp
 import numpy as np
 import math
+from Piano import Piano
 
-import pygame
 
-# Initialize Pygame
-pygame.init()
-
-# Load sound files for each note (replace with actual file paths)
-sounds = [pygame.mixer.Sound("assets/sounds/C.wav")]
-
-from sound import play
-
+piano_window = Piano()
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands()
 mp_draw = mp.solutions.drawing_utils
@@ -37,6 +30,7 @@ while True:
     """
     TODO: Write the docstring
     """
+    piano_window.update()
     can_read, frame = capture.read()
     if not can_read:
         break
@@ -84,9 +78,11 @@ while True:
         for i in range(len(angles)):
             if angles[i] > ANGLE_THRESHOLD and not is_pressed[i]:
                 is_pressed[i] = True
-                sounds[0].play()
+                piano_window.press_key(i)
+                
             elif angles[i] < ANGLE_THRESHOLD and is_pressed[i]:
                 is_pressed[i] = False
+                piano_window.unpress_key(i)
         
         print(is_pressed)
         
