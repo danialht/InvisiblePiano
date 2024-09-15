@@ -18,17 +18,17 @@ hands = mp_hands.Hands()
 mp_draw = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 
-ANGLE_THRESHOLD = 40
+ANGLE_THRESHOLD = 20
 
 capture = cv.VideoCapture(0)
 
 # Landmark point numbers that we are interested in
 points = [
     0,              # bottommost point of hand
-    5, 6,    # Index finger
-    9, 10,   # Middle finger
-    13, 14,  # Ring finger
-    17, 18,  # Pinky finger
+    5, 7,    # Index finger
+    9, 11,   # Middle finger
+    13, 15,  # Ring finger
+    17, 19,  # Pinky finger
     ]
 
 is_pressed = [False for _ in range(8)]
