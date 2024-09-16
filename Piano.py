@@ -12,9 +12,11 @@ class Piano:
         self.image = pygame.transform.scale(self.image, (self.window_width, self.window_height))
         self.window_size = (self.window_width, self.window_height)
         self.screen = pygame.display.set_mode(self.window_size)
-        pygame.display.set_caption("My Pygame Window")
+        pygame.display.set_caption("Invisible Piano")
         self.init_loading_screen()
         self.IS_LOADING = True
+        
+        self.init_sounds()
         
         self.key_pressed = [False for _ in range(8)]
         self.rects = []
@@ -23,12 +25,27 @@ class Piano:
             new_rect.fill((255, 0, 0, 128))
             self.rects.append(new_rect)
         
+    def init_sounds(self):
+        self.sounds = [
+            pygame.mixer.Sound("./assets/sounds/C.wav"),
+            pygame.mixer.Sound("./assets/sounds/C#.wav"),
+            pygame.mixer.Sound("./assets/sounds/D.wav"),
+            pygame.mixer.Sound("./assets/sounds/E.wav"),
+            pygame.mixer.Sound("./assets/sounds/F.wav"),
+            pygame.mixer.Sound("./assets/sounds/F#.wav"),
+            pygame.mixer.Sound("./assets/sounds/G.wav"),
+            pygame.mixer.Sound("./assets/sounds/C.wav"),
+        ]
     
     def press_key(self, index):
         self.key_pressed[index] = True
+        self.play_sound(index)
     
     def unpress_key(self, index):
         self.key_pressed[index] = False
+    
+    def play_sound(self, index):
+        self.sounds[index].play()
     
     def init_loading_screen(self):
         font = pygame.font.Font(None, 36)
