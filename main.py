@@ -2,8 +2,7 @@ import cv2 as cv
 import mediapipe as mp
 import numpy as np
 import math
-from Piano import Piano
-
+from app.Piano import Piano
 
 piano_window = Piano()
 mp_hands = mp.solutions.hands
@@ -17,7 +16,7 @@ capture = cv.VideoCapture(0)
 
 # Landmark point numbers that we are interested in
 points = [
-    0,              # bottommost point of hand
+    0,       # bottommost point of hand
     5, 7,    # Index finger
     9, 11,   # Middle finger
     13, 15,  # Ring finger
@@ -58,8 +57,7 @@ while True:
         for hand_landmarks in results.multi_hand_landmarks:
             # Get the index finger tip
             index_finger_tip = hand_landmarks.landmark[8]
-
-
+            
             # finding an angle for each finger
             
             bottom_pos = np.array([hand_landmarks.landmark[points[0]].x * image.shape[1], hand_landmarks.landmark[points[0]].y * image.shape[0]])
@@ -85,10 +83,7 @@ while True:
                 piano_window.unpress_key(i)
         
         print(is_pressed)
-        
-        #if(len(angles) != 8):
-        #    cv.putText(frame, "Both of your hands must be visible!", (0, 30), cv.FONT_HERSHEY_TRIPLEX, 0.9, (255, 0, 255), 2)
-         
+    
 
     cv.imshow('Invisible Piano', frame)
     
