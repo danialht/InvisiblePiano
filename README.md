@@ -1,4 +1,4 @@
-# Invisible Piano: Computer Vision, Signal Processing, and Art!
+# Virtual-Piano: Computer Vision, Signal Processing, and Art!
 
 ## Introduction
 A virtual piano which you can play by showing your hands to the camera and moving you fingers. Your hand movements are going to be detected and depending on your finger poisitions the approprate key will be pressed.
